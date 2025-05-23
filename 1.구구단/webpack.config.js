@@ -1,7 +1,7 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
-  name: 'gugudan-setting',
   mode: 'development', // 실서비스: production
   devtool: 'eval',
   resolve: {
@@ -18,11 +18,24 @@ module.exports = {
         test: /\.jsx?/,
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: {
+                  browsers: ['>1% in KR'],
+                },
+                debug: true,
+              },
+            ],
+            '@babel/preset-react',
+          ],
+          plugins: [],
         },
       },
     ],
   },
+  plugins: [new webpack.LoaderOptionsPlugin({ debug: true })],
   output: {
     //출력 경로
     path: path.join(__dirname, 'dist'), //__dirname은 현재 디렉토리 경로를 의미한다. D://react-webgame/lecture
